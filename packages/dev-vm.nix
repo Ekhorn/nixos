@@ -268,25 +268,24 @@ let
       exit 0
     fi
 
-    project_name=$(basename "$git_root")
-    vm_project_dir="/root/$project_name"
+    project_dir=$(${git} -C "$git_root" project-dir)
 
-    if ! vm_ssh "test -d '$vm_project_dir'"; then
+    if ! vm_ssh "test -d '$project_dir'"; then
       repo_url=$(${git} -C "$git_root" remote get-url origin 2>/dev/null) || repo_url=""
       if [ -n "$repo_url" ]; then
-        vm_ssh "git clone '$repo_url' '$vm_project_dir'" || echo "Clone failed; will open /root instead." >&2
+        vm_ssh "git clone '$repo_url' '$project_dir'" || echo "Clone failed; will open /root instead." >&2
       else
         echo "No 'origin' remote for $git_root; cannot clone into the VM." >&2
       fi
     fi
 
-    if ! vm_ssh "test -d '$vm_project_dir'"; then
-      vm_project_dir="/root"
+    if ! vm_ssh "test -d '$project_dir'"; then
+      project_dir="/root"
     fi
 
     zed_cmd=$(command -v zeditor) || zed_cmd=""
     if [ -n "$zed_cmd" ]; then
-      "$zed_cmd" "ssh://root@localhost:2222$vm_project_dir" >/dev/null 2>&1 &
+      "$zed_cmd" "ssh://root@localhost:2222$project_dir" >/dev/null 2>&1 &
     else
       echo "zeditor not found in PATH." >&2
     fi

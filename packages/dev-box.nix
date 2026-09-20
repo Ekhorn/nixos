@@ -130,7 +130,7 @@ let
     done
 
     # Resolve the host git repository (if any) before touching docker.
-    # Inside one: the project lives in the container at /root/<repo dir name>.
+    # Inside one: the project lives in the container at /root/<clone name>.
     git_root=$(${git} rev-parse --show-toplevel 2>/dev/null) || git_root=""
 
     if [ "$CLEAN_FIRST" = true ]; then
@@ -155,13 +155,12 @@ let
       exit 0
     fi
 
-    project_name=$(basename "$git_root")
-    box_project_dir="/root/$project_name"
+    project_dir=$(${git} -C "$git_root" project-dir)
 
-    if ! docker exec dev-box test -d "$box_project_dir"; then
+    if ! docker exec dev-box test -d "$project_dir"; then
       repo_url=$(${git} -C "$git_root" remote get-url origin 2>/dev/null) || repo_url=""
       if [ -n "$repo_url" ]; then
-        docker exec dev-box git clone "$repo_url" "$box_project_dir" || echo "Clone failed; will open /root instead." >&2
+        docker exec dev-box git clone "$repo_url" "$project_dir" || echo "Clone failed; will open /root instead." >&2
       else
         echo "No 'origin' remote for $git_root; cannot clone into the container." >&2
       fi
@@ -169,13 +168,13 @@ let
 
     sleep 1 # Wait for SSH to be ready
 
-    if ! docker exec dev-box test -d "$box_project_dir"; then
-      box_project_dir="/root"
+    if ! docker exec dev-box test -d "$project_dir"; then
+      project_dir="/root"
     fi
 
     zed_cmd=$(command -v zeditor) || zed_cmd=""
     if [ -n "$zed_cmd" ]; then
-      "$zed_cmd" "ssh://root@localhost:2222$box_project_dir" >/dev/null 2>&1 &
+      "$zed_cmd" "ssh://root@localhost:2222$project_dir" >/dev/null 2>&1 &
     else
       echo "zeditor not found in PATH." >&2
     fi
