@@ -28,6 +28,15 @@ in
             name=\${name:-$(basename \"$(git rev-parse --show-toplevel 2>/dev/null)\")}; \
             echo \"/root/$name\"; \
           }; f";
+        replace-from = "!f() { \
+           git fetch \"ssh://root@localhost:2222/\$(git project-dir)\" && \
+            git range-diff '@{u}...FETCH_HEAD' \&\& \\
+            printf \"Replace current branch? [y/N] \" && \
+            read answer && \
+            case \"\$answer\" in \
+              y|Y) git reset --hard FETCH_HEAD ;; \
+            esac; \
+          }; f";
       }
       // (lib.genAttrs [ "abort" "continue" "quit" ] gitOp);
       core.editor = "hx";
