@@ -4,10 +4,11 @@
   programs.gnome-shell = {
     enable = true;
     extensions = with pkgs.gnomeExtensions; [
-      { package = system-monitor; }
-      { package = status-icons; }
-      # { package = places-menu; }
       { package = auto-move-windows; }
+      { package = pip-on-top; }
+      # { package = places-menu; }
+      { package = status-icons; }
+      { package = system-monitor; }
       # { package = tiling-shell; }
     ];
   };
