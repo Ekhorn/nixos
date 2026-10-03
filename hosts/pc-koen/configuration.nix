@@ -85,6 +85,7 @@
       "-L" # print build logs
       "--update-input"
       "latest"
+      "--commit-lock-file"
     ];
     dates = "06:00";
   };
