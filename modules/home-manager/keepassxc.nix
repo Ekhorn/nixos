@@ -9,9 +9,11 @@
       [Browser]
       CustomProxyLocation=
       Enabled=true
+      CustomBrowserType=2
 
       [GUI]
       ApplicationTheme=dark
+      CompactMode=true
       HidePasswords=true
       MinimizeOnClose=true
       MinimizeOnStartup=true
@@ -25,6 +27,9 @@
       [PasswordGenerator]
       AdditionalChars=
       ExcludedChars=
+
+      [Security]
+      Security_HideNotes=true
     '';
   };
   home.packages = with pkgs; [ keepassxc ];
