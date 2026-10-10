@@ -45,16 +45,19 @@
       };
       language_models = {
         ollama = {
-          api_url = "http://pc-koen:11435";
+          api_url = "http://pc-koen:32103";
           auto_discover = true;
         };
         openai_compatible = {
           gufo = {
-            api_url = "http://pc-koen:8080";
+            api_url = "http://pc-koen:32100/v1";
             available_models = [
               {
-                name = "qwen-3.8-27b";
+                name = "Qwen3.8-27B";
                 max_tokens = 262144;
+                max_output_tokens = 131072;
+                max_completion_tokens = 131072;
+                reasoning_effort = "medium";
               }
             ];
           };
@@ -63,8 +66,8 @@
 
       agent = {
         default_model = {
-          provider = "ollama";
-          model = "qwen3.8:27b";
+          provider = "gufo";
+          model = "Qwen3.8-27B";
         };
         favorite_models = [
         ];
