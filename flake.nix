@@ -115,6 +115,7 @@
       devShells = forAllSystems (
         system: pkgs:
         pkgs.lib.optionalAttrs (!isUnsupported system && system != "x86_64-freebsd") {
+          default = mkShell ./shells/default.nix pkgs;
           playwright = mkShell ./shells/playwright.nix pkgs;
           openremote = mkShell ./shells/openremote.nix pkgs;
         }
