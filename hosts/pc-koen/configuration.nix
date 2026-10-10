@@ -70,11 +70,36 @@
   };
   services.caddy = {
     enable = true;
-    virtualHosts.":11435" = {
-      extraConfig = ''
-        reverse_proxy http://192.168.223.107:11434
-      '';
-    };
+    virtualHosts = builtins.listToAttrs (
+      map
+        (
+          { source, target }:
+          {
+            name = ":${toString target}";
+            value.extraConfig = ''
+              reverse_proxy http://192.168.223.107:${toString source}
+            '';
+          }
+        )
+        [
+          { # gufo
+            source = 8080;
+            target = 32100;
+          }
+          { # openwebui
+            source = 8081;
+            target = 32101;
+          }
+          { # searxng
+            source = 8082;
+            target = 32102;
+          }
+          { # ollama
+            source = 11434;
+            target = 32103;
+          }
+        ]
+    );
   };
 
   system.stateVersion = "25.11";

@@ -45,12 +45,12 @@
       };
       language_models = {
         ollama = {
-          api_url = "http://pc-koen:11435";
+          api_url = "http://pc-koen:32103";
           auto_discover = true;
         };
         openai_compatible = {
           gufo = {
-            api_url = "http://pc-koen:8080";
+            api_url = "http://pc-koen:32100";
             available_models = [
               {
                 name = "qwen-3.8-27b";
