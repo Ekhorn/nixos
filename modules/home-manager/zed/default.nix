@@ -48,6 +48,17 @@
           api_url = "http://pc-koen:11435";
           auto_discover = true;
         };
+        openai_compatible = {
+          gufo = {
+            api_url = "http://pc-koen:8080";
+            available_models = [
+              {
+                name = "qwen-3.8-27b";
+                max_tokens = 262144;
+              }
+            ];
+          };
+        };
       };
 
       agent = {
