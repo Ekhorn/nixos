@@ -125,4 +125,10 @@
     target = ".config/zed/AGENTS.md";
     source = ./GLOBAL.md;
   };
+
+  # Global agent skills
+  home.file."~/.agents/skills/unattended/SKILL.md" = {
+    target = ".agents/skills/unattended/SKILL.md";
+    source = ./skills/unattended.md;
+  };
 }
