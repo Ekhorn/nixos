@@ -71,8 +71,10 @@
           provider = "gufo";
           model = "Qwen3.8-27B";
         };
-        favorite_models = [
-        ];
+        favorite_models = [ ];
+        sandbox_permissions = {
+          allow_unsandboxed = true;
+        };
       };
 
       languages = {
