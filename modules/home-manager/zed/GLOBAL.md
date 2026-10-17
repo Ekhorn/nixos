@@ -17,8 +17,8 @@ be in write mode.
 
 #### Path Examples
 
-Example for a project named `nix_config`:
+Example for a project named `nixos`:
 
-- Correct: `nix_config/packages/file.nix`
+- Correct: `nixos/packages/file.nix`
 - Incorrect: `packages/file.nix`
-- Incorrect: `/home/user/develop/nix_config/packages/file.nix`
+- Incorrect: `/home/user/develop/nixos/packages/file.nix`

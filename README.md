@@ -1,4 +1,4 @@
-# Nix Configuration
+# NixOS Configuration
 
 ### Minimal Installation
 
@@ -90,7 +90,7 @@ reboot
 Assuming the repo is cloned (use `nmtui` for wifi).
 
 ```sh
-cd develop/nix_config
+cd develop/nixos
 ```
 
 Copy the hardware configuration to the host directory.

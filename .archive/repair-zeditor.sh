@@ -1,5 +1,5 @@
 while true; do
-  output=$(zeditor --foreground develop/nix_config 2>&1)
+  output=$(zeditor --foreground develop/nixos 2>&1)
   echo "$output"
 
   broken_path=$(echo "$output" | grep -o '/nix/store/[^ ]*' | tail -n1)
