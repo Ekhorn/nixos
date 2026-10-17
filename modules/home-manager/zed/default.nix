@@ -66,6 +66,7 @@
 
       agent = {
         enable_feedback = false;
+        show_turn_stats = true;
         default_model = {
           provider = "gufo";
           model = "Qwen3.8-27B";
