@@ -3,7 +3,7 @@
 {
   programs.zed-editor = {
     enable = true;
-    mutableUserSettings = true;
+    mutableUserSettings = false;
     extensions = [
       "groovy"
       "java"
