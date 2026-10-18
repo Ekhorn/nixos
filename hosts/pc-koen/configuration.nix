@@ -105,7 +105,7 @@
   system.stateVersion = "25.11";
   system.autoUpgrade = {
     enable = true;
-    flake = inputs.self.outPath;
+    flake = "path:/home/${config.user.username}/develop/nixos";
     flags = [
       "-L" # print build logs
       "--update-input"
