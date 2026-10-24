@@ -82,6 +82,8 @@ let
           "d /root/.ssh 0700 root root - -"
         ];
 
+        services.earlyoom.enable = true;
+
         services.openssh = {
           enable = true;
           hostKeys = [
