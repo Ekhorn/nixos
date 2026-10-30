@@ -13,7 +13,15 @@
       "nix"
       "toml"
     ];
-    package = pkgs.latest.zed-editor;
+    package = pkgs.latest.zed-editor.overrideAttrs (old: {
+      patches = (old.patches or [ ]) ++ [
+        (pkgs.fetchpatch {
+          name = "zed-openai-model-discovery.patch";
+          url = "https://github.com/Ekhorn/zed/commit/fc445e998642b6d83ef2640f6f60093e9d1f8899.patch";
+          hash = "sha256-HgWsi4ZMs7/3pz91IKJ6AAok7wix71icvetOO7Q46/I=";
+        })
+      ];
+    });
     themes = {
       dark = ./theme.json;
     };
@@ -51,15 +59,6 @@
         openai_compatible = {
           gufo = {
             api_url = "http://pc-koen:32100/v1";
-            available_models = [
-              {
-                name = "Qwen3.8-27B";
-                max_tokens = 262144;
-                max_output_tokens = 131072;
-                max_completion_tokens = 131072;
-                reasoning_effort = "medium";
-              }
-            ];
           };
         };
       };
@@ -67,11 +66,6 @@
       agent = {
         enable_feedback = false;
         show_turn_stats = true;
-        default_model = {
-          provider = "gufo";
-          model = "Qwen3.8-27B";
-        };
-        favorite_models = [ ];
         sandbox_permissions = {
           allow_unsandboxed = true;
         };
