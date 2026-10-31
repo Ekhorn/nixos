@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.zed-editor = {
@@ -68,6 +68,10 @@
         show_turn_stats = true;
         sandbox_permissions = {
           allow_unsandboxed = true;
+        };
+        tool_permissions = {
+          default = "confirm";
+          tools = (import ./tools.nix { inherit lib; }).tools;
         };
       };
 
