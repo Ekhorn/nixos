@@ -1,5 +1,8 @@
 { pkgs, lib, ... }:
 
+let
+  unattended = import ./skills/unattended.nix { inherit lib; };
+in
 {
   programs.zed-editor = {
     enable = true;
@@ -126,15 +129,10 @@
     };
   };
 
-  # Global agent rules for the Zed agent
-  home.file."AGENTS.md" = {
-    target = ".config/zed/AGENTS.md";
-    source = ./GLOBAL.md;
-  };
-
-  # Global agent skills
-  home.file."~/.agents/skills/unattended/SKILL.md" = {
-    target = ".agents/skills/unattended/SKILL.md";
-    source = ./skills/unattended.md;
+  home.file = {
+    # Global agent rules for the Zed agent
+    ".config/zed/AGENTS.md".source = ./GLOBAL.md;
+    # Global agent skills
+    ".agents/skills/unattended/SKILL.md".text = unattended.generateSkill;
   };
 }
