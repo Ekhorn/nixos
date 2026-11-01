@@ -4,7 +4,10 @@ let
   tools = {
     terminal = {
       default = "confirm";
-      always_allow = [ { pattern = "^git status$"; } ];
+      always_allow = [
+        { pattern = "^git --no-optional-locks status$"; }
+        { pattern = "^git --no-optional-locks --no-pager diff( --cached)?$"; }
+      ];
       always_deny = [ ];
       always_confirm = [ ];
     };
