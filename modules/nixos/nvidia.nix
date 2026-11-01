@@ -16,7 +16,7 @@
       package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
     };
     nvidia-container-toolkit = {
-      enable = true;
+      enable = false;
     };
   };
 
