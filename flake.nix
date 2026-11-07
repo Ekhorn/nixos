@@ -151,5 +151,15 @@
           };
         }
       );
+
+      debug = {
+        # Source inspection, without evaluating a system configuration.
+        sources = {
+          stable = inputs.stable.outPath;
+          unstable = inputs.unstable.outPath;
+          latest = inputs.latest.outPath;
+          home-manager = inputs.home-manager.outPath;
+        };
+      };
     };
 }
