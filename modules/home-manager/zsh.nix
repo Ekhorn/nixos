@@ -75,42 +75,6 @@ in
           # 'command' prevents an infinite loop of calling this function.
           command gradle "$@"
         }
-        stash-clean() {
-          local -a lines
-          local text ref hash subject entry choice
-
-          # ref (%gd), hash (%H), subject (%gs)
-          text="$(git stash list --format='%gd %H %gs')"
-          [[ -z $text ]] && {
-            print "No stashes."
-            return 0
-          }
-
-          lines=(''${(Oa)''${(f)text}}) # reverse
-
-          for entry in "''${lines[@]}"; do
-            read -r ref hash subject <<< "$entry"
-            printf '\033[H\033[J' # Home cursor, Clear to bottom
-
-            if {
-              print "$ref: $subject\n"
-              git --no-pager stash show --patch --color=always "$hash"
-            } | LESSKEY_CONTENT=$'#command\nd quit d\nn quit n\nq quit q' \
-                less -XR -P'[d]rop  [n]ext  [q]uit'
-            then
-              choice=0
-            else
-              choice=$?
-            fi
-
-            case $choice in
-              100) git stash drop "$ref" || return 1 ;; # d
-              110) continue ;;                          # n
-              113) return 0 ;;                          # q
-              *)   print -u2 "Pager failed ($choice)."; return 1 ;;
-            esac
-          done
-        }
         docker-host-access-toggle() {
           local var="DOCKERD_ROOTLESS_ROOTLESSKIT_DISABLE_HOST_LOOPBACK"
 

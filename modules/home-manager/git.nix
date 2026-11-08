@@ -25,6 +25,25 @@ in
         count = "!f() { base=\${1:-$(\${merge-base})}; echo \" $(git rev-list --count $base..HEAD) commits\"; }; f";
         pop-untracked = "!git diff --binary \"stash@{0}^2\" \"stash@{0}\" | git apply && git stash drop \"stash@{0}\"";
         stash-untracked = "stash push --keep-index";
+        view-stash = "!f() { \
+          text=\"$(git stash list --format='%gd %H %gs')\"; \
+          [ -z \"$text\" ] && { printf 'No stashes.\\n'; return 0; }; \
+          printf '%s\\n' \"$text\" | tac | while read -r ref hash subject; do \
+            printf '\\033[H\\033[J'; \
+            if { printf '%s: %s\\n' \"$ref\" \"$subject\"; git --no-pager stash show --patch --color=always \"$hash\"; } | \
+               LESSKEY_CONTENT=\"$(printf '#command\\nd quit d\\nn quit n\\nq quit q')\" less -XR -P'[d]rop  [n]ext  [q]uit'; then \
+              choice=0; \
+            else \
+              choice=$?; \
+            fi; \
+            case $choice in \
+              100) git stash drop \"$ref\" || exit 1 ;; \
+              110) continue ;; \
+              113) exit 0 ;; \
+              *)   printf 'Pager failed (%s).\\n' \"$choice\" >&2; exit 1 ;; \
+            esac; \
+          done; \
+        }; f";
         project-dir = "!f() { \
             name=$(basename \"$(git remote get-url origin 2>/dev/null)\" .git); \
             name=\${name:-$(basename \"$(git rev-parse --show-toplevel 2>/dev/null)\")}; \
