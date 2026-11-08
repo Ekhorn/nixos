@@ -15,6 +15,18 @@ root's directory name. This includes source and destination paths.
 If the terminal tool is unavailable, stop and notify the user that they may not
 be in write mode.
 
+#### Tool use patterns
+
+Only tools with `always_allow` / `always_deny` / `always_confirm` patterns are
+listed here; the rest follow their configured defaults.
+
+@patterns@
+
+Prefer the always allowed command patterns where possible. Use exact pattern
+matches: avoid adding flags (e.g. `--short`) or chaining commands with `&&`
+or `;`. These do NOT match and will prompt for user permission. Call each
+matching command separately.
+
 #### Path Examples
 
 Example for a project named `nixos`:

@@ -1,7 +1,7 @@
 { lib }:
 
 let
-  tools = {
+  gated = {
     terminal = {
       default = "confirm";
       always_allow = [
@@ -51,7 +51,7 @@ let
   ];
 
   byDefault =
-    permission: builtins.attrNames (lib.filterAttrs (_: tool: tool.default == permission) tools);
+    permission: builtins.attrNames (lib.filterAttrs (_: tool: tool.default == permission) gated);
 
   byDefaultConfirm = byDefault "confirm";
   byDefaultDeny = byDefault "deny";
@@ -61,17 +61,28 @@ let
   notAllowed = byDefaultConfirm ++ byDefaultDeny;
 
   withPatterns =
-    option: builtins.attrNames (lib.filterAttrs (_: tool: (tool.${option} or [ ]) != [ ]) tools);
+    option: builtins.attrNames (lib.filterAttrs (_: tool: (tool.${option} or [ ]) != [ ]) gated);
+
+  patterns = lib.unique (
+    lib.concatLists (
+      map withPatterns [
+        "always_allow"
+        "always_deny"
+        "always_confirm"
+      ]
+    )
+  );
 in
 {
   inherit
-    tools
+    gated
     ungated
     byDefault
     withPatterns
     allowed
     notAllowed
+    patterns
     ;
 
-  all = builtins.attrNames tools ++ ungated;
+  all = builtins.attrNames gated ++ ungated;
 }

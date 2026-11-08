@@ -1,7 +1,8 @@
 { pkgs, lib, ... }:
 
 let
-  unattended = import ./skills/unattended.nix { inherit lib; };
+  tools = import ./tools.nix { inherit lib; };
+  generate = import ./generate-skill.nix { inherit lib; };
 in
 {
   programs.zed-editor = {
@@ -74,7 +75,7 @@ in
         };
         tool_permissions = {
           default = "confirm";
-          tools = (import ./tools.nix { inherit lib; }).tools;
+          tools = tools.gated;
         };
       };
 
@@ -131,8 +132,13 @@ in
 
   home.file = {
     # Global agent rules for the Zed agent
-    ".config/zed/AGENTS.md".source = ./GLOBAL.md;
+    ".config/zed/AGENTS.md".source = pkgs.replaceVars ./GLOBAL.md {
+      patterns = generate.mkList tools.patterns;
+    };
     # Global agent skills
-    ".agents/skills/unattended/SKILL.md".text = unattended.generateSkill;
+    ".agents/skills/unattended/SKILL.md".source = pkgs.replaceVars ./skills/unattended.md {
+      allowed = generate.mkList tools.allowed;
+      notAllowed = generate.mkList tools.notAllowed;
+    };
   };
 }
