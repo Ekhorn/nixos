@@ -22,7 +22,9 @@ in
         ls = "log --stat --pretty=format:'%C(yellow)%h%Creset %Cgreen%cr%Creset %Cblue%an%Creset%C(auto)%d%Creset %s'";
         lsd = "!git log --stat --pretty=format:'%C(yellow)%h%Creset %Cgreen%cr%Creset %Cblue%an%Creset%C(auto)%d%Creset %s' $(${merge-base})..HEAD";
         sum = "!git diff --oneline --stat $(${merge-base})..HEAD";
-        count = "!f() { base=\${1:-$(${merge-base})}; echo \" $(git rev-list --count $base..HEAD) commits\"; }; f";
+        count = "!f() { base=\${1:-$(\${merge-base})}; echo \" $(git rev-list --count $base..HEAD) commits\"; }; f";
+        pop-untracked = "!git diff --binary \"stash@{0}^2\" \"stash@{0}\" | git apply && git stash drop \"stash@{0}\"";
+        stash-untracked = "stash push --keep-index";
         project-dir = "!f() { \
             name=$(basename \"$(git remote get-url origin 2>/dev/null)\" .git); \
             name=\${name:-$(basename \"$(git rev-parse --show-toplevel 2>/dev/null)\")}; \
