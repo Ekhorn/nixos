@@ -34,3 +34,9 @@ Example for a project named `nixos`:
 - Correct: `nixos/packages/file.nix`
 - Incorrect: `packages/file.nix`
 - Incorrect: `/home/user/develop/nixos/packages/file.nix`
+
+#### Code comments
+
+- Preserve comments explaining non-obvious current intent or constraints.
+- Do not record change history in code comments (that's preserved for git).
+- Do not write comments that merely restate the code.
