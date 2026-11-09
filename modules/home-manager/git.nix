@@ -51,7 +51,7 @@ in
           }; f";
         replace-from = "!f() { \
            git fetch \"ssh://root@localhost:2222/\$(git project-dir)\" && \
-            git range-diff '@{u}...FETCH_HEAD' \&\& \\
+            git range-diff '@...FETCH_HEAD' \&\& \\
             printf \"Replace current branch? [y/N] \" && \
             read answer && \
             case \"\$answer\" in \
