@@ -7,7 +7,7 @@ let
   sha256 = "sha256:0i62ss2y3bv5jc9dwydvrnc3dl5x0hpg2q4i5plj6h7d5x9wlard";
   playwrightShell = import ./playwright.nix { inherit pkgs commit sha256; };
 in
-pkgs.mkShell {
+pkgs.mkShellNoCC {
   buildInputs = with pkgs; [
     protobuf
     grpc

@@ -12,7 +12,7 @@ let
   };
   playwright-driver = (import src { system = pkgs.stdenv.hostPlatform.system; }).playwright-driver;
 in
-pkgs.mkShell {
+pkgs.mkShellNoCC {
   nativeBuildInputs = [ playwright-driver ];
   shellHook = ''
     export PLAYWRIGHT_BROWSERS_PATH=${playwright-driver.browsers}
