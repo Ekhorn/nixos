@@ -140,5 +140,6 @@ in
       allowed = generate.mkList tools.allowed;
       notAllowed = generate.mkList tools.notAllowed;
     };
+    ".agents/skills/nix/SKILL.md".source = ./skills/nix.md;
   };
 }

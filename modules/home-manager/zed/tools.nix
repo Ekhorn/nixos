@@ -38,6 +38,10 @@ let
     };
     skill = {
       default = "confirm";
+      always_allow = [
+        # Skill authorization is keyed by the SKILL.md path
+        { pattern = "^.*/\\.agents/skills/nix/SKILL\\.md$"; }
+      ];
     };
   };
 

@@ -33,30 +33,9 @@ of hardcoding a username.
 - For modules under `home-manager.users`, pass arguments via `home-manager.extraSpecialArgs`.
 - Do not bump `home.stateVersion` or `system.stateVersion` merely to match the pinned release.
 
-### Find declarations
+### Nix lookups
 
-```sh
-# NixOS modules (replace <source> with stable, unstable, or latest)
-nix eval --raw '.#debug.sources.<source>' | xargs -I{} rg -n -C 3 'option' '{}/nixos/modules'
-# Home Manager modules
-nix eval --raw '.#debug.sources.home-manager' | xargs -I{} rg -n -C 3 'option' '{}/modules'
-```
+Nix-specific rules for finding option declarations, inspecting available
+options and metadata, and reading effective values live in the `nix` skill.
 
-Search related names when the exact option path is unknown. `nix search` searches packages, not options.
-
-### Inspect available options and metadata
-
-```sh
-# List available options in a namespace
-nix eval --json '.#nixosConfigurations.<host>.options.<path>' --apply builtins.attrNames
-# Inspect an option's metadata
-nix eval --json '.#nixosConfigurations.<host>.options.<path>' --apply 'o: { inherit (o) description declarations; type = o.type.description; }'
-```
-
-### Read the effective value
-
-Read/search first; evaluate only when the resulting value is unclear.
-
-```sh
-nix eval .#nixosConfigurations.<host>.config.<path>
-```
+Use the `skill` tool with the name `nix` for these lookups.
