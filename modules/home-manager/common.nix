@@ -39,7 +39,6 @@
     lm_sensors
     lsof
     gnumake
-    # neovim
     nil
     package-version-server
     nixos-anywhere

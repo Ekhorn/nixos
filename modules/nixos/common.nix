@@ -105,6 +105,5 @@
     "discord"
     "idea"
     "obsidian"
-    "vscode"
   ];
 }

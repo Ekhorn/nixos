@@ -15,9 +15,6 @@
       open = false;
       package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
     };
-    nvidia-container-toolkit = {
-      enable = false;
-    };
   };
 
   # The only switch that turns `hardware.nvidia.enabled` on (it is readOnly and

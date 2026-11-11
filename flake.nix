@@ -20,7 +20,6 @@
       url = "github:microvm-nix/microvm.nix";
       inputs.nixpkgs.follows = "stable";
     };
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
     nixos-hardware.url = "github:NixOS/nixos-hardware/72674a6b5599e844c045ae7449ba91f803d44ebc";
   };
 

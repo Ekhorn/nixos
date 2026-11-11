@@ -47,7 +47,6 @@ in
     users.groups.guest = { };
 
     # Essential overwrites
-    hardware.nvidia-container-toolkit.enable = lib.mkVMOverride false;
     user.username = lib.mkVMOverride user;
     users.users.${user} = {
       initialPassword = lib.mkVMOverride "test";
@@ -56,7 +55,6 @@ in
 
     # Non-essential overwrites
     services.avahi.enable = lib.mkVMOverride false;
-    services.flatpak.enable = lib.mkVMOverride false; # Slow boot times as apps are installing
     services.ollama.enable = lib.mkVMOverride false;
     services.printing.enable = lib.mkVMOverride false;
 

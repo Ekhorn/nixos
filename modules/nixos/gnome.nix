@@ -3,7 +3,6 @@
 {
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
-  # Gets enabled when flatpak is enabled
   services.gnome.gnome-software.enable = false;
 
   environment.gnome.excludePackages = with pkgs; [
